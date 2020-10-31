@@ -1,0 +1,9 @@
+= Othello.rs
+
+continuing with a recurring theme I have, it's yet another othello bot,
+but in Rust this time.
+
+.algorithms implemented
+- minmax w/ alpha-beta pruning
+- negamax w/ alpha-beta pruning
+- rng move generation
