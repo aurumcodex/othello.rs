@@ -21,10 +21,10 @@ impl Player {
         player
     }
 
-    pub fn init(color: i8, human: bool) -> Player {
+    pub fn init(clr: i8, is_human: bool) -> Player {
         Player {
-            color: color,
-            human: human,
+            color: clr,
+            human: is_human,
             passing: false,
         }
     }

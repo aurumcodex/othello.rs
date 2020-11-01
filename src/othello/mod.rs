@@ -7,7 +7,7 @@ pub mod types;
 
 use crate::util::{procs::*, values::*};
 
-use algorithms::*;
+// use algorithms::*;
 use moves::*;
 use player::*;
 
