@@ -1,4 +1,5 @@
 // lib.rs
+
 pub mod othello;
 pub mod util;
 
@@ -13,7 +14,7 @@ pub struct Opts {
     pub debug: bool,
 }
 
-pub fn run(mut game: Board, options: Opts) -> Result<(), Box<dyn std::error::Error>> {
+pub fn run(/*mut*/ game: Board, options: Opts) -> Result<(), Box<dyn std::error::Error>> {
     println!("Options are: {:?}", options);
     println!("Game Board: {:?}", game);
 
@@ -21,7 +22,10 @@ pub fn run(mut game: Board, options: Opts) -> Result<(), Box<dyn std::error::Err
         print_help();
     } else if options.version {
         print_verison();
-    }
+    } /* else {
+          play_othello(game);
+      }
+      */
 
     Ok(())
 }

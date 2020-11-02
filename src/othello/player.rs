@@ -1,9 +1,10 @@
 // player.rs
+
 use std::io;
 
 use crate::util::{procs::*, values::*};
 
-#[derive(Debug, Default)]
+#[derive(Copy, Clone, Debug, Default)]
 pub struct Player {
     pub color: i8,
     pub human: bool,

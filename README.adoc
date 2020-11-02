@@ -3,6 +3,9 @@
 continuing with a recurring theme I have, it's yet another othello bot,
 but in Rust this time.
 
+NOTE: this is a reimplementation of an othello bot i made a while back, but hosted on GitLab:
+https://gitlab.com/aurumcodex/othellors
+
 .algorithms implemented
 - minmax w/ alpha-beta pruning
 - negamax w/ alpha-beta pruning

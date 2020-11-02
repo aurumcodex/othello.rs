@@ -1,6 +1,6 @@
 // evaluate.rs
-use crate::othello::Board;
 
+use crate::othello::Board;
 use crate::util::values::*;
 
 pub struct Scores {
@@ -15,8 +15,8 @@ pub fn calculate_scores_disc(board: Board) -> Scores {
 
     for cell in board.board {
         match cell {
-            BLACK => black_count++,
-            WHITE => white_count++,
+            BLACK => black_count += 1,
+            WHITE => white_count += 1,
             _ => {},
         }
     }

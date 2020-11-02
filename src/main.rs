@@ -13,7 +13,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let game = othello::Board::new(); // this'll get initialized properly in the run function.
 
-    let err = othello_rs::run(game, opts);
-
-    err // err here contains either an Ok(()) or an Error
+    othello_rs::run(game, opts)
+    // here contains either an Ok(()) or an Error
 }

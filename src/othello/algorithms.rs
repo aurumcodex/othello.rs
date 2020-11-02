@@ -1,6 +1,9 @@
 // algorithms.rs
 
-use crate::othello::{moves::Move, Algorithm, Board};
+use crate::othello::{
+    moves::{get_cells, Move},
+    Algorithm, Board,
+};
 
 impl Algorithm for Board {
     fn alpha_beta(
@@ -26,8 +29,8 @@ impl Algorithm for Board {
         0
     }
 
-    fn rng_move(moveset: Vec<Move>, debug: bool) -> isize {
-        // let mut cells = get_cells
+    fn rng_move(moveset: Vec<Move>, _debug: bool) -> isize {
+        let /*mut*/ _cells = get_cells(moveset);
         0
     }
 }
