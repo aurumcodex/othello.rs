@@ -8,7 +8,8 @@ pub mod types;
 
 use crate::util::{procs::*, values::*};
 
-// use algorithms::*;
+// use algorithms::Algorithm;
+use algorithms::*;
 use moves::*;
 use player::*;
 
@@ -20,49 +21,23 @@ pub struct Board {
     game_over: bool,
 }
 
-pub trait Algorithm {
-    fn alpha_beta(
-        board: &mut Self,
-        alpha: &mut f64,
-        beta: &mut f64,
-        color: i8,
-        depth: isize,
-        maxing: bool,
-        debug: bool,
-    ) -> isize;
-
-    fn negamax(
-        board: &mut Self,
-        alpha: &mut f64,
-        beta: &mut f64,
-        color: i8,
-        depth: isize,
-        debug: bool,
-    ) -> isize;
-
-    fn rng_move(moveset: Vec<Move>, debug: bool) -> isize;
-}
-
 impl Default for Board {
     fn default() -> Self {
-        Board {
-            player: Player::new(),
-            bot: Player::new(),
-            board: [0; 64],
-            game_over: false,
-        }
-    }
-}
-
-impl Board {
-    pub fn new() -> Board {
         Board {
             player: Player::new(),
             bot: Player::new(),
             board: [NONE; BOARD_SIZE],
             game_over: false,
         }
-    } // generate new board
+    }
+}
+
+impl Algorithm for Board {}
+
+impl Board {
+    pub fn new() -> Board {
+        Board::default()
+    } // generate new, default board
 
     pub fn setup(&mut self, color: i8, debug: bool) {
         self.player = Player::init(color, true);
@@ -77,7 +52,20 @@ impl Board {
         }
     } // setup board via modifying variables
 
-    pub fn apply(&mut self, _color: i8, _cell: usize, _debug: bool) {}
+    pub fn apply(&mut self, color: i8, cell: usize, debug: bool) {
+        if self.board[cell] == NONE {
+            if debug {
+                dbg!("applying move at cell: {}", cell);
+                dbg!("cell is currently: {}", self.board[cell]);
+            }
+
+            self.board[cell] = color;
+
+            if debug {
+                dbg!("cell is now: {}", self.board[cell]);
+            }
+        }
+    } // apply a move at a given cell
 
     pub fn flip_discs(&mut self, color: i8, cell: usize, dir: isize, debug: bool) {
         let mut temp = cell as isize;
@@ -97,24 +85,79 @@ impl Board {
                 }
             }
         }
-    }
+    } // flips discs on the board
 
     // this is for printing out the board *with* all the available moves on it.
-    pub fn display(&self, _moveset: Vec<Move>) {}
+    pub fn display(&self, moveset: Vec<Move>) {
+        let cells = get_cells(moveset);
+
+        println!(
+            "bot is {} | player is {}",
+            get_color(self.bot.color),
+            get_color(self.player.color)
+        );
+        println!("  ._a_b_c_d_e_f_g_h_");
+        for (index, cell) in self.board.iter().enumerate() {
+            if index % 8 == 0 {
+                print!("{} |", get_row(index));
+            }
+            if cells.contains(&index) {
+                print_char(index, "+");
+                continue;
+            } else {
+                print_char(index, get_color(*cell));
+            }
+        }
+    } // shows board with moves for reference
 
     // this one is a printing function that just shows the board, without any moves on it.
-    pub fn show(&self) {}
+    pub fn show(&self) {
+        println!(
+            "bot is {} | player is {}",
+            get_color(self.bot.color),
+            get_color(self.player.color)
+        );
+        println!("  ._a_b_c_d_e_f_g_h_");
+        for (index, cell) in self.board.iter().enumerate() {
+            if index % 8 == 0 {
+                print!("{} |", get_row(index));
+                print_char(index, get_color(*cell));
+                continue;
+            } else {
+                print_char(index, get_color(*cell));
+            }
+        }
+    } // shows board as is - with no moves
 
     pub fn is_game_over(&self) -> bool {
         self.player.passing == self.bot.passing
     } // check if the game is over
+
+    // getters / setters (may or may not need these)
+    // immutables
+    pub fn player(&self) -> &Player {
+        &self.player
+    }
+
+    // mutables
+    pub fn player_mut(&mut self) -> &mut Player {
+        &mut self.player
+    }
+
+    pub fn bot_mut(&mut self) -> &mut Player {
+        &mut self.bot
+    }
+
+    pub fn game_over_mut(&mut self) -> &mut bool {
+        &mut self.game_over
+    }
 }
 
 impl Movelist for Board {
     fn get_legal_move(&self, mut index: isize, dir: isize, color: i8) -> Move {
         let mut flips = 0;
         let mut wall = false;
-        let mut result: Move = Default::default();
+        let mut result = Move::default();
 
         while index >= 0 && index < BOARD_SIZE as isize && !wall {
             wall = check_wall(index as usize, dir);

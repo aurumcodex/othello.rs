@@ -3,6 +3,7 @@
 use crate::util::values::{BLACK, NONE, WHITE};
 
 pub fn print_char(i: usize, s: &str) {
+    // the difference is subtle, but very important
     if i % 8 == 7 {
         println!(" {}", s);
     } else {
@@ -10,12 +11,12 @@ pub fn print_char(i: usize, s: &str) {
     }
 }
 
-pub fn get_color(color: i8) -> String {
+pub fn get_color<'a>(color: i8) -> &'a str {
     match color {
-        BLACK => String::from("B"),
-        WHITE => String::from("W"),
-        NONE => String::from("-"),
-        _ => String::from("?"),
+        BLACK => "B",
+        WHITE => "W",
+        NONE => "-",
+        _ => "?",
     }
 }
 

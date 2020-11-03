@@ -14,5 +14,5 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let game = othello::Board::new(); // this'll get initialized properly in the run function.
 
     othello_rs::run(game, opts)
-    // here contains either an Ok(()) or an Error
-}
+    // function call above returns a result like the one the main does
+} // end main

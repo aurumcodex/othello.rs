@@ -2,6 +2,7 @@
 
 use std::io;
 
+use crate::othello::bot::Bot;
 use crate::util::{procs::*, values::*};
 
 #[derive(Copy, Clone, Debug, Default)]
@@ -11,15 +12,11 @@ pub struct Player {
     pub passing: bool,
 }
 
-pub trait Bot {
-    fn make_move(&self) -> isize;
-}
+impl Bot for Player {}
 
 impl Player {
     pub fn new() -> Player {
-        let player: Player = Default::default();
-
-        player
+        Player::default()
     }
 
     pub fn init(clr: i8, is_human: bool) -> Player {

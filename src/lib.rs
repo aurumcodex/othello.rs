@@ -3,7 +3,9 @@
 pub mod othello;
 pub mod util;
 
-use othello::*;
+use std::error::Error;
+
+use othello::{bot::Bot, Board};
 use util::*;
 
 #[derive(Debug)]
@@ -14,28 +16,37 @@ pub struct Opts {
     pub debug: bool,
 }
 
-pub fn run(/*mut*/ game: Board, options: Opts) -> Result<(), Box<dyn std::error::Error>> {
+pub fn run(/*mut*/ game: Board, options: Opts) -> Result<(), Box<dyn Error>> {
     println!("Options are: {:?}", options);
     println!("Game Board: {:?}", game);
 
-    if options.help {
-        print_help();
-    } else if options.version {
-        print_verison();
-    } /* else {
-          play_othello(game);
-      }
-      */
+    let mv = game.player().make_move(game, 9, true);
 
+    if options.help {
+        print_help()
+    } else if options.version {
+        print_verison()
+    } else {
+        println!("{}", mv);
+        play_othello(game, options.human, options.debug)
+    }
+}
+
+fn play_othello(
+    /*mut*/ _game: Board,
+    _human: bool,
+    _debug: bool,
+) -> Result<(), Box<dyn Error>> {
+    // TODO: implement main game loop here (rather important)
     Ok(())
 }
 
-fn print_help() {
-    println!("TODO: add a wonderful help message");
+fn print_help() -> Result<(), Box<dyn Error>> {
+    println!("{}", &HELP);
     std::process::exit(0);
 }
 
-fn print_verison() {
+fn print_verison() -> Result<(), Box<dyn Error>> {
     println!("othello_rs - version: {}", values::VERSION);
     std::process::exit(0);
 }
