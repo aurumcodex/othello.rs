@@ -86,6 +86,7 @@ impl Board {
     } // flips discs on the board
 
     // this is for printing out the board *with* all the available moves on it.
+    // #[cfg(feature = "ascii")]
     pub fn display(&self, moveset: Vec<Move>) {
         let cells = get_cells(moveset);
 
@@ -109,6 +110,7 @@ impl Board {
     } // shows board with moves for reference
 
     // this one is a printing function that just shows the board, without any moves on it.
+    // #[cfg(feature = "ascii")]
     pub fn show(&self) {
         println!(
             "bot is {} | player is {}",

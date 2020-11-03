@@ -2,6 +2,7 @@
 
 use crate::util::values::{BLACK, NONE, WHITE};
 
+// #[cfg(feature = "ascii")]
 pub fn print_char(i: usize, s: &str) {
     // the difference is subtle, but very important
     if i % 8 == 7 {
