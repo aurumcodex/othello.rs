@@ -16,6 +16,7 @@ pub trait Bot {
     fn make_move(&self, _game: Board, _turn_count: usize, _debug: bool) -> usize;
 }
 
+#[cfg(feature = "color")]
 impl Bot for Player {
     fn make_move(&self, _game: Board, _turn_count: usize, _debug: bool) -> usize {
         // let mut rng = rand::
@@ -29,6 +30,23 @@ impl Bot for Player {
         let mut _move_type = MoveType::Auto;
 
         usize::MAX
+    }
+}
+
+#[cfg(feature = "ascii")]
+impl Bot for Player {
+    fn make_move(&self, _game: Board, _turn_count: usize, _debug: bool) -> usize {
+        // let mut rng = rand::
+        let mut _best_move = usize::MAX;
+        let _depth = 0;
+        let _maxing = true;
+        let _alpha = f64::MIN;
+        let _beta = f64::MAX;
+        let _color = self.color;
+
+        let mut _move_type = MoveType::Auto;
+
+        9999
     }
 }
 

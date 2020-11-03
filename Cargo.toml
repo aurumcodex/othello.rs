@@ -28,7 +28,7 @@ lto = "thin"
 opt-level = 3
 
 [features]
-default = [] # will set this to have deps on "parallel" and "tui" later
+default = ["ascii"] # will set this to have deps on "parallel" and "tui" later
 
 ascii = ["colored/no-color"] # no deps required other than ones listed w/out "optional" key
 parallel = ["rayon"] # enable parallel move evaluation for bot

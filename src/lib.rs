@@ -41,6 +41,7 @@ fn play_othello(
     _debug: bool,
 ) -> Result<(), Box<dyn Error>> {
     // TODO: implement main game loop here (rather important)
+    _game.show();
     Ok(())
 }
 

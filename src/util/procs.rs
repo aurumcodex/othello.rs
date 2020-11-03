@@ -1,16 +1,30 @@
 // procs.rs
 
+use colored::*;
+
 use crate::util::values::{BLACK, NONE, WHITE};
 
-// #[cfg(feature = "ascii")]
-pub fn print_char(i: usize, s: &str) {
+// #[cfg(feature = "color")]
+// pub trait Printing {
+pub fn print_char(i: usize, c: i8, s: &str) {
     // the difference is subtle, but very important
     if i % 8 == 7 {
-        println!(" {}", s);
+        match c {
+            BLACK => println!("{}{}", s.black().on_green(), " ".on_green()),
+            NONE => println!("{}{}", s.red().on_green(), " ".on_green()),
+            WHITE => println!("{}{}", s.white().on_green(), " ".on_green()),
+            _ => {}
+        }
     } else {
-        print!(" {}", s);
+        match c {
+            BLACK => print!("{}", s.black().on_green()),
+            NONE => print!("{}", s.red().on_green()),
+            WHITE => print!("{}", s.white().on_green()),
+            _ => {}
+        }
     }
 }
+// }
 
 pub fn get_color<'a>(color: i8) -> &'a str {
     match color {

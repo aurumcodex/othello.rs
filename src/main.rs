@@ -20,6 +20,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         println!("{}", "blue string, bruv".blue());
     }
 
+    #[cfg(feature = "color")]
+    {
+        use colored::*;
+        println!("{}", "blue string, bruv".blue());
+    }
+
     let game = othello::Board::new(); // this'll get initialized properly in the run function.
 
     othello_rs::run(game, opts)
