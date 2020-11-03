@@ -13,7 +13,7 @@ use crate::util::{procs::*, values::*};
 use moves::*;
 use player::*;
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Clone, Debug)]
 pub struct Board {
     player: Player,
     bot: Player,

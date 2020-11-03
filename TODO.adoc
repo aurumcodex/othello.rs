@@ -11,7 +11,7 @@
 ** [ ] add a `&str` or `bool` to hold a value to use either weighted board or max disc based evaluation
 ** [ ] add a `&str` or set of `bool`s for toggling which runtime fuction to use
 ** [ ] add a `bool` flag for running a simulation against itself
-** [ ] add validation function(s) for 
+** [ ] add validation function(s) for `&str` version of flag for algorithm forcing
 
 === `othello::bot.rs`
 - [ ] implement `generate_alpha_beta_move`
@@ -20,7 +20,7 @@
 ** [ ] implement an "auto" decision for `make_move`
 
 === `othello::algorithms.rs`
-- [ ] implement `alpha_beta` algorithm
+- [x] implement `alpha_beta` algorithm
 - [ ] implement `negamax` algorithm
 - [ ] add other search algorithms (optional)
 

@@ -1,5 +1,7 @@
 // algorithms.rs
 
+use std::cmp::Ordering;
+
 use rand::prelude::*;
 
 use crate::othello::{evaluate::*, moves::*, Board};
@@ -51,7 +53,7 @@ impl Algorithm for Board {
         maxing: bool,
         debug: bool,
     ) -> isize {
-        let mut score = 0;
+        let mut score; // does not need to be instantiated
         if debug {
             dbg!(
                 "move count: {} | depth = {}",
@@ -59,65 +61,61 @@ impl Algorithm for Board {
                 depth
             );
         }
-        if depth == MAX_DEPTH {
-            if debug {
-                dbg!("hit max depth ({})", MAX_DEPTH);
+        match depth.cmp(&MAX_DEPTH) {
+            Ordering::Equal => {
+                if debug {
+                    dbg!("hit max depth ({})", MAX_DEPTH);
+                }
+                score = *calculate_scores_disc(self.clone()).score();
+                if debug {
+                    self.show();
+                }
             }
+            Ordering::Less => {
+                match maxing {
+                    true => {
+                        score = isize::MIN;
+                        let moveset = self.generate_moves(color);
+                        for mv in moveset {
+                            if debug {
+                                dbg!("legal cell = {}", mv.cell);
+                            }
+                            let mut temp = self.clone();
+                            temp.apply(color, mv.cell, debug);
+                            temp.flip_discs(color, mv.cell, -mv.direction, debug);
 
-            score = *calculate_scores_disc(*self).score();
-
-            if debug {
-                self.show();
-            }
-        } else if depth < MAX_DEPTH {
-            match maxing {
-                true => {
-                    score = isize::MIN;
-                    let moveset = self.generate_moves(color);
-
-                    for mv in moveset {
-                        if debug {
-                            dbg!("legal cell = {}", mv.cell);
-                        }
-
-                        let mut temp = self.clone();
-                        temp.apply(color, mv.cell, debug);
-                        temp.flip_discs(color, mv.cell, -mv.direction, debug);
-
-                        let val = temp.alpha_beta(alpha, beta, -color, depth + 1, !maxing, debug);
-
-                        score = score.max(val);
-                        alpha = alpha.max(score as f64);
-
-                        if alpha >= beta {
-                            break;
+                            let val =
+                                temp.alpha_beta(alpha, beta, -color, depth + 1, !maxing, debug);
+                            score = score.max(val);
+                            alpha = alpha.max(score as f64);
+                            if alpha >= beta {
+                                break;
+                            }
                         }
                     }
-                }
-                false => {
-                    score = isize::MAX;
-                    let moveset = self.generate_moves(color);
+                    false => {
+                        score = isize::MAX;
+                        let moveset = self.generate_moves(color);
+                        for mv in moveset {
+                            if debug {
+                                dbg!("legal cell = {}", mv.cell);
+                            }
+                            let mut temp = self.clone();
+                            temp.apply(color, mv.cell, debug);
+                            temp.flip_discs(color, mv.cell, -mv.direction, debug);
 
-                    for mv in moveset {
-                        if debug {
-                            dbg!("legal cell = {}", mv.cell);
-                        }
-
-                        let mut temp = self.clone();
-                        temp.apply(color, mv.cell, debug);
-                        temp.flip_discs(color, mv.cell, -mv.direction, debug);
-
-                        let val = temp.alpha_beta(alpha, beta, -color, depth + 1, !maxing, debug);
-
-                        score = score.min(val);
-                        beta = beta.min(val as f64);
-
-                        if alpha >= beta {
-                            break;
+                            let val =
+                                temp.alpha_beta(alpha, beta, -color, depth + 1, !maxing, debug);
+                            score = score.min(val);
+                            beta = beta.min(val as f64);
+                            if alpha >= beta {
+                                break;
+                            }
                         }
                     }
-                }
-            } // end match
+                } // end match
+            }
+            Ordering::Greater => panic!("this should not be possible"),
         }
         score
     }

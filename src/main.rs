@@ -11,7 +11,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         debug: opts.contains(["-d", "--debug"]),
         algorithm: opts
             .opt_value_from_str("--algorithm")?
-            .unwrap_or("auto".into()),
+            .unwrap_or_else(|| "auto".into()),
     };
 
     let game = othello::Board::new(); // this'll get initialized properly in the run function.

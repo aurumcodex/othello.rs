@@ -23,7 +23,7 @@ pub fn run(/*mut*/ game: Board, options: Opts) -> Result<(), Box<dyn Error>> {
     println!("Options are: {:?}", options);
     println!("Game Board: {:?}", game);
 
-    let mv = game.player().make_move(game, 9, true);
+    let mv = game.player().make_move(game.clone(), 9, true);
 
     if options.help {
         print_help()
