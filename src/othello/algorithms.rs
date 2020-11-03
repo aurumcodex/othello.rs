@@ -2,33 +2,30 @@
 
 use rand::prelude::*;
 
-use crate::othello::moves::*;
-use crate::util::values::BOARD_SIZE;
+use crate::othello::{evaluate::*, moves::*, Board};
+use crate::util::values::{BOARD_SIZE, MAX_DEPTH};
 
 pub trait Algorithm {
     fn alpha_beta(
-        _board: &mut Self,
-        _alpha: &mut f64,
-        _beta: &mut f64,
-        _color: i8,
-        _depth: isize,
-        _maxing: bool,
-        _debug: bool,
-    ) -> isize {
-        0
-    }
+        &mut self,
+        alpha: f64, // set as mutables in the actual implementation below (could also be ints)
+        beta: f64,  // set as mutables in the actual implementation below (could also be ints)
+        color: i8,
+        depth: usize,
+        maxing: bool,
+        debug: bool,
+    ) -> isize;
 
     fn negamax(
-        _board: &mut Self,
-        _alpha: &mut f64,
-        _beta: &mut f64,
-        _color: i8,
-        _depth: isize,
-        _debug: bool,
-    ) -> isize {
-        0
-    }
+        &mut self,
+        alpha: f64, //set as mutables in the actual implementation below (could also be ints)
+        beta: f64,  //set as mutables in the actual implementation below (could also be ints)
+        color: i8,
+        depth: isize,
+        debug: bool,
+    ) -> isize;
 
+    // this is a default implementation that doesn't require a `self` call
     fn rng_move(moveset: Vec<Move>, debug: bool) -> usize {
         let cells = get_cells(moveset);
         let mut mv = rand::thread_rng().gen_range(0, BOARD_SIZE);
@@ -42,4 +39,99 @@ pub trait Algorithm {
         }
         mv
     }
+}
+
+impl Algorithm for Board {
+    fn alpha_beta(
+        &mut self,
+        mut alpha: f64,
+        mut beta: f64,
+        color: i8,
+        depth: usize,
+        maxing: bool,
+        debug: bool,
+    ) -> isize {
+        let mut score = 0;
+        if debug {
+            dbg!(
+                "move count: {} | depth = {}",
+                self.generate_moves(color).len(),
+                depth
+            );
+        }
+        if depth == MAX_DEPTH {
+            if debug {
+                dbg!("hit max depth ({})", MAX_DEPTH);
+            }
+
+            score = *calculate_scores_disc(*self).score();
+
+            if debug {
+                self.show();
+            }
+        } else if depth < MAX_DEPTH {
+            match maxing {
+                true => {
+                    score = isize::MIN;
+                    let moveset = self.generate_moves(color);
+
+                    for mv in moveset {
+                        if debug {
+                            dbg!("legal cell = {}", mv.cell);
+                        }
+
+                        let mut temp = self.clone();
+                        temp.apply(color, mv.cell, debug);
+                        temp.flip_discs(color, mv.cell, -mv.direction, debug);
+
+                        let val = temp.alpha_beta(alpha, beta, -color, depth + 1, !maxing, debug);
+
+                        score = score.max(val);
+                        alpha = alpha.max(score as f64);
+
+                        if alpha >= beta {
+                            break;
+                        }
+                    }
+                }
+                false => {
+                    score = isize::MAX;
+                    let moveset = self.generate_moves(color);
+
+                    for mv in moveset {
+                        if debug {
+                            dbg!("legal cell = {}", mv.cell);
+                        }
+
+                        let mut temp = self.clone();
+                        temp.apply(color, mv.cell, debug);
+                        temp.flip_discs(color, mv.cell, -mv.direction, debug);
+
+                        let val = temp.alpha_beta(alpha, beta, -color, depth + 1, !maxing, debug);
+
+                        score = score.min(val);
+                        beta = beta.min(val as f64);
+
+                        if alpha >= beta {
+                            break;
+                        }
+                    }
+                }
+            } // end match
+        }
+        score
+    }
+
+    fn negamax(
+        &mut self,
+        mut _alpha: f64,
+        mut _beta: f64,
+        _color: i8,
+        _depth: isize,
+        _debug: bool,
+    ) -> isize {
+        0
+    }
+
+    // rng_move doesn't need to be implemented here
 }

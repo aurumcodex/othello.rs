@@ -2,7 +2,7 @@
 
 use std::io;
 
-use crate::othello::bot::Bot;
+// use crate::othello::bot::Bot;
 use crate::util::{procs::*, values::*};
 
 #[derive(Copy, Clone, Debug, Default)]
@@ -12,7 +12,7 @@ pub struct Player {
     pub passing: bool,
 }
 
-impl Bot for Player {}
+// impl Bot for Player {}
 
 impl Player {
     pub fn new() -> Player {

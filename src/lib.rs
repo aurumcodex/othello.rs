@@ -16,6 +16,7 @@ pub struct Opts {
     pub version: bool,
     pub human: bool,
     pub debug: bool,
+    pub algorithm: String,
 }
 
 pub fn run(/*mut*/ game: Board, options: Opts) -> Result<(), Box<dyn Error>> {

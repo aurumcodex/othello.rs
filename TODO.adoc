@@ -3,7 +3,7 @@
 == implementations
 
 === `lib.rs`
-- [ ] implement main game loop in `play_othello`
+- [ ] implement main game loop in `play_othello` and derivatives
 - [ ] add help message to the `print_help` function (implement in `mod util`)
 - [ ] add functions to run the game in ascii mode, colored ascii mode, and full TUI mode
 - [ ] finish `Opts` struct
@@ -24,7 +24,7 @@
 - [ ] implement `negamax` algorithm
 - [ ] add other search algorithms (optional)
 
-=== project structure
+== project structure
 - [ ] migrate the functions for the different runtime modes into separate module dir
 - [ ] put functions into own module files within `game` module dir
 - [ ] add documentation for project for project completeness

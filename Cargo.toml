@@ -1,12 +1,13 @@
-# Minimum Supported Rust Version: 1.36.0
+# Minimum Supported Rust Version: 1.36.0 (?)
 
 [package]
 name = "othello_rs"
-version = "0.1.0"
+version = "0.1.0" # 0.1.0 is base implementation, sequential evaluation, no parallelism
 authors = ["aurumcodex <aurumcodex@protonmail.com>"]
 edition = "2018"
 license = "MIT"
-publish = false
+publish = false # not planning on hosting this on any crate registries
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
@@ -18,7 +19,8 @@ rayon = "1.5" # mrvs: 1.36.0
 # termion = "*" # gonna add this later, once original implementation's done
 
 [profile.dev]
-opt-level = 3
+lto = "thin"
+opt-level = 2
 
 [profile.release]
 lto = "thin"

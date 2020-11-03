@@ -9,6 +9,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         version: opts.contains(["-v", "--version"]),
         human: opts.opt_value_from_str("--human")?.unwrap_or(true),
         debug: opts.contains(["-d", "--debug"]),
+        algorithm: opts
+            .opt_value_from_str("--algorithm")?
+            .unwrap_or("auto".into()),
     };
 
     let game = othello::Board::new(); // this'll get initialized properly in the run function.

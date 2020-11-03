@@ -2,13 +2,14 @@
 
 pub mod algorithms;
 pub mod bot;
+pub mod evaluate;
 pub mod moves;
 pub mod player;
 pub mod types;
 
 use crate::util::{procs::*, values::*};
 
-use algorithms::*;
+// use algorithms::*;
 use moves::*;
 use player::*;
 
@@ -30,8 +31,6 @@ impl Default for Board {
         }
     }
 }
-
-impl Algorithm for Board {}
 
 impl Board {
     pub fn new() -> Board {
