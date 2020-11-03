@@ -1,0 +1,31 @@
+= TODO list for `othello_rs`
+
+== implementations
+
+=== `lib.rs`
+- [ ] implement main game loop in `play_othello`
+- [ ] add help message to the `print_help` function (implement in `mod util`)
+- [ ] add functions to run the game in ascii mode, colored ascii mode, and full TUI mode
+- [ ] finish `Opts` struct
+** [ ] add a `&str` to hold a string for forcing a particular algorithm
+** [ ] add a `&str` or `bool` to hold a value to use either weighted board or max disc based evaluation
+** [ ] add a `&str` or set of `bool`s for toggling which runtime fuction to use
+** [ ] add a `bool` flag for running a simulation against itself
+** [ ] add validation function(s) for 
+
+=== `othello::bot.rs`
+- [ ] implement `generate_alpha_beta_move`
+- [ ] implement `generate_negamax_move`
+- [ ] implement `make_move` using mentioned functions
+** [ ] implement an "auto" decision for `make_move`
+
+=== `othello::algorithms.rs`
+- [ ] implement `alpha_beta` algorithm
+- [ ] implement `negamax` algorithm
+- [ ] add other search algorithms (optional)
+
+=== project structure
+- [ ] migrate the functions for the different runtime modes into separate module dir
+- [ ] put functions into own module files within `game` module dir
+- [ ] add documentation for project for project completeness
+- [ ] (completely optional, but consider adding testing modules? (probably won't be necessary))

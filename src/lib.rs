@@ -1,5 +1,7 @@
 // lib.rs
 
+// This Othello implementation uses Rust's `i8` data type for its 'Color' representation
+
 pub mod othello;
 pub mod util;
 

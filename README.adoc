@@ -14,6 +14,8 @@ i blame my class on A.I. in college for my facination with othello in general.
 - negamax w/ alpha-beta pruning
 - rng move generation
 
+NOTE: view the TODO file to see what remains to be implemented.
+
 == License
 `othello_rs` created and released under the MIT license.
 

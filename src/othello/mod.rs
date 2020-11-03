@@ -8,7 +8,6 @@ pub mod types;
 
 use crate::util::{procs::*, values::*};
 
-// use algorithms::Algorithm;
 use algorithms::*;
 use moves::*;
 use player::*;
@@ -139,6 +138,13 @@ impl Board {
         &self.player
     }
 
+    pub fn bot(&self) -> &Player {
+        &self.bot
+    }
+
+    pub fn board(&self) -> &[i8; BOARD_SIZE] {
+        &self.board
+    }
     // mutables
     pub fn player_mut(&mut self) -> &mut Player {
         &mut self.player
@@ -146,6 +152,10 @@ impl Board {
 
     pub fn bot_mut(&mut self) -> &mut Player {
         &mut self.bot
+    }
+
+    pub fn board_mut(&mut self) -> &mut [i8; BOARD_SIZE] {
+        &mut self.board
     }
 
     pub fn game_over_mut(&mut self) -> &mut bool {
