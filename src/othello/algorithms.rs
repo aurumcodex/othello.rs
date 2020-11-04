@@ -1,4 +1,5 @@
 // algorithms.rs
+#![allow(clippy::ptr_arg)]
 
 use std::cmp::Ordering;
 

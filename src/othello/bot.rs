@@ -1,8 +1,9 @@
 // bot.rs
+#![allow(clippy::ptr_arg)]
 
 use std::collections::HashMap;
 
-use rand::prelude::*;
+// use rand::prelude::*;
 
 use crate::othello::{algorithms::Algorithm, moves::Move, player::Player, Board};
 
@@ -46,12 +47,12 @@ impl Bot for Player {
         // let moveset = game.generate_move()
         let mut _used_move = move_type;
 
-        match rand::thread_rng().gen_range(0, 20) {
-            0..=4 => _used_move = MoveType::RNG,
-            5..=9 => _used_move = MoveType::AlphaBeta,
-            10..=14 => _used_move = MoveType::Negamax,
-            _ => _used_move = MoveType::RNG,
-        }
+        // match rand::thread_rng().gen_range(0, 20) {
+        //     0..=4 => _used_move = MoveType::RNG,
+        //     5..=9 => _used_move = MoveType::AlphaBeta,
+        //     10..=14 => _used_move = MoveType::Negamax,
+        //     _ => _used_move = MoveType::RNG,
+        // }
 
         match _used_move {
             MoveType::Auto => {
