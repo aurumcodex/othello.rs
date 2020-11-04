@@ -23,17 +23,17 @@ pub trait Algorithm {
         alpha: f64, //set as mutables in the actual implementation below (could also be ints)
         beta: f64,  //set as mutables in the actual implementation below (could also be ints)
         color: i8,
-        depth: isize,
+        depth: usize,
         debug: bool,
     ) -> isize;
 
     // this is a default implementation that doesn't require a `self` call
-    fn rng_move(moveset: Vec<Move>, debug: bool) -> usize {
-        let cells = get_cells(moveset);
+    fn rng_move(moveset: &Vec<Move>, debug: bool) -> usize {
+        let cells = get_cells(&moveset);
         let mut mv = rand::thread_rng().gen_range(0, BOARD_SIZE);
 
         if debug {
-            println!("cell list: {:?}", &cells);
+            println!("[rng_move] cell list: {:?}", &cells);
         }
 
         while !cells.contains(&mv) {
@@ -53,10 +53,10 @@ impl Algorithm for Board {
         maxing: bool,
         debug: bool,
     ) -> isize {
-        let mut score; // does not need to be instantiated
+        let mut score: isize; // does not need to be instantiated
         if debug {
             dbg!(
-                "move count: {} | depth = {}",
+                "[alpha_beta] moves available: {} | depth = {}",
                 self.generate_moves(color).len(),
                 depth
             );
@@ -122,14 +122,51 @@ impl Algorithm for Board {
 
     fn negamax(
         &mut self,
-        mut _alpha: f64,
-        mut _beta: f64,
-        _color: i8,
-        _depth: isize,
-        _debug: bool,
+        mut alpha: f64,
+        beta: f64, // beta here does not need to be mutable
+        color: i8,
+        depth: usize,
+        debug: bool,
     ) -> isize {
-        0
-    }
+        let moveset = self.generate_moves(color);
+        let mut score: isize = isize::MIN;
 
+        if debug {
+            dbg!(
+                "[negamax] moves available: {} | depth = {}",
+                moveset.len(),
+                depth
+            );
+        }
+
+        if depth == MAX_DEPTH {
+            if debug {
+                dbg!("hit max depth ({})", MAX_DEPTH);
+            }
+            score = *calculate_scores_disc(self.clone()).score();
+            if debug {
+                self.show();
+            }
+        } else {
+            for mv in moveset {
+                if debug {
+                    dbg!("legal cell = {}", mv.cell);
+                }
+
+                let mut temp = self.clone();
+                temp.apply(color, mv.cell, debug);
+                temp.flip_discs(color, mv.cell, -mv.direction, debug);
+
+                score = score.max(-temp.negamax(-beta, -alpha, -color, depth + 1, debug));
+                alpha = alpha.max(score as f64);
+
+                if alpha >= beta {
+                    break;
+                }
+            }
+        }
+
+        score
+    }
     // rng_move doesn't need to be implemented here
 }

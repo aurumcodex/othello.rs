@@ -7,6 +7,8 @@ pub mod moves;
 pub mod player;
 pub mod types;
 
+use std::io;
+
 use crate::util::{procs::*, values::*};
 
 // use algorithms::*;
@@ -39,7 +41,7 @@ impl Board {
 
     pub fn setup(&mut self, color: i8, debug: bool) {
         self.player = Player::init(color, true);
-        self.bot = Player::init(color, false);
+        self.bot = Player::init(-color, false);
 
         if debug {
             println!(
@@ -48,6 +50,11 @@ impl Board {
                 get_color(self.bot.color)
             );
         }
+
+        self.board[27] = WHITE;
+        self.board[28] = BLACK;
+        self.board[35] = BLACK;
+        self.board[36] = WHITE;
     } // setup board via modifying variables
 
     pub fn apply(&mut self, color: i8, cell: usize, debug: bool) {
@@ -87,8 +94,8 @@ impl Board {
 
     // this is for printing out the board *with* all the available moves on it.
     // #[cfg(feature = "ascii")]
-    pub fn display(&self, moveset: Vec<Move>) {
-        let cells = get_cells(moveset);
+    pub fn display(&self, moveset: &Vec<Move>) {
+        let cells = get_cells(&moveset);
 
         println!(
             "bot is {} | player is {}",
@@ -138,7 +145,7 @@ impl Board {
     } // shows board as is - with no moves
 
     pub fn is_game_over(&self) -> bool {
-        self.player.passing == self.bot.passing
+        self.player.passing && self.bot.passing
     } // check if the game is over
 
     // getters / setters (may or may not need these)
@@ -224,4 +231,46 @@ impl Movelist for Board {
         }
         movelist
     } // generates a vector of legal moves on the board
+}
+
+impl Passing for Board {
+    fn get_pass_input(&mut self) {
+        let mut input = String::new();
+        io::stdin()
+            .read_line(&mut input)
+            .expect("unable to read user input");
+
+        match input.trim() {
+            "B" | "b" => self.handle_skip_black(*self.bot()),
+            "W" | "w" => self.handle_skip_white(*self.bot()),
+            _ => {
+                println!("invalid option found; please re-enter.");
+                self.get_pass_input();
+            }
+        }
+    }
+
+    fn handle_skip_black(&mut self, mut opponent: Player) {
+        if self.player.color != BLACK && self.player.human {
+            println!("player has no valid moves and must pass; please re-enter:");
+            self.get_pass_input();
+        } else {
+            match self.player.passing {
+                true => opponent.passing = true,
+                false => self.player.passing = true,
+            }
+        }
+    }
+
+    fn handle_skip_white(&mut self, mut opponent: Player) {
+        if self.player.color != WHITE && self.player.human {
+            println!("player has no valid moves and must pass; please re-enter:");
+            self.get_pass_input();
+        } else {
+            match self.player.passing {
+                true => opponent.passing = true,
+                false => self.player.passing = true,
+            }
+        }
+    }
 }

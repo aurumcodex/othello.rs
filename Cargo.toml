@@ -28,8 +28,9 @@ lto = "thin"
 opt-level = 3
 
 [features]
-default = ["ascii"] # will set this to have deps on "parallel" and "tui" later
+default = ["ascii", "sequential"] # will set this to have deps on "parallel" and "tui" later
 
+sequential = []      # disable parallel evaluation
 ascii = ["colored/no-color"] # no deps required other than ones listed w/out "optional" key
 parallel = ["rayon"] # enable parallel move evaluation for bot
 color = ["colored"]  # enable colorized ascii output (with no tui application)

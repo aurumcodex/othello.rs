@@ -2,7 +2,7 @@
 
 use crate::util::{procs::*, values::*};
 
-#[derive(Copy, Clone, Debug, Default, PartialEq, Eq)]
+#[derive(Copy, Clone, Debug, Default)]
 pub struct Move {
     pub cell: usize,
     pub num_flips: isize,
@@ -41,7 +41,7 @@ impl Move {
         print!("num flips: {} | ", self.num_flips);
         println!(
             "direction: {}",
-            match DIR_MAP.get(&self.direction) {
+            match DIR_MAP.get(&-self.direction) {
                 Some(x) => *x,
                 None => "",
             }
@@ -79,7 +79,7 @@ pub fn check_wall(cell: usize, dir: isize) -> bool {
     }
 }
 
-pub fn get_cells(moveset: Vec<Move>) -> Vec<usize> {
+pub fn get_cells(moveset: &Vec<Move>) -> Vec<usize> {
     let mut cells: Vec<usize> = Vec::new();
 
     for m in moveset {

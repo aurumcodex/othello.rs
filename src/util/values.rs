@@ -35,7 +35,7 @@ pub const WEIGHTS: [isize; 64] = [
     -5, -5, -5, -5, -50, -30, 150, -30, 30, 5, 5, 30, -30, 150,
 ];
 
-pub static ROWS: Lazy<HashMap<&str, usize>> = Lazy::new(|| {
+pub static COLUMNS: Lazy<HashMap<&str, usize>> = Lazy::new(|| {
     let mut map = HashMap::new();
     map.insert("a", 0);
     map.insert("b", 1);
@@ -49,7 +49,7 @@ pub static ROWS: Lazy<HashMap<&str, usize>> = Lazy::new(|| {
     map
 });
 
-pub static COLUMNS: Lazy<HashMap<&str, usize>> = Lazy::new(|| {
+pub static ROWS: Lazy<HashMap<&str, usize>> = Lazy::new(|| {
     let mut map = HashMap::new();
     map.insert("1", 0);
     map.insert("2", 1);

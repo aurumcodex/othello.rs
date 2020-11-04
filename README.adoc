@@ -6,7 +6,7 @@ but in Rust this time.
 NOTE: this is a reimplementation of an othello bot i made a while back, +
 but hosted on GitLab: https://gitlab.com/aurumcodex/othellors
 
-this is more or less for an education and curiosity standpoint more than anything.
+this is more or less for an educational and curiosity standpoint more than anything.
 i blame my class on A.I. in college for my facination with othello in general.
 
 ._algorithms implemented (or to be implemented)_
