@@ -1,4 +1,5 @@
 // moves.rs
+#![allow(clippy::ptr_arg)]
 
 use crate::util::{procs::*, values::*};
 
