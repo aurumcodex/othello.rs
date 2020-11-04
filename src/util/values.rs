@@ -7,7 +7,7 @@ use once_cell::sync::Lazy;
 pub const VERSION: &str = "0.1.0";
 
 pub const BOARD_SIZE: usize = 64;
-pub const MAX_DEPTH: usize = 15;
+pub const MAX_DEPTH: usize = 11; // anything over 11 is really slow for some reason; too slow, even
 
 pub const WHITE: i8 = -1;
 pub const NONE: i8 = 0;

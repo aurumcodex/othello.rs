@@ -106,7 +106,7 @@ impl Board {
         println!("  ._a_b_c_d_e_f_g_h_");
         for (index, cell) in self.board.iter().enumerate() {
             if index % 8 == 0 {
-                print!("{} |", get_row(index));
+                print!(" {}|", get_row(index));
             }
             if cells.contains(&index) {
                 print_char(index, *cell, "+");
@@ -129,18 +129,10 @@ impl Board {
         for (index, cell) in self.board.iter().enumerate() {
             if index % 8 == 0 {
                 print!(" {}|", get_row(index));
-                print_char(
-                    index,
-                    *cell,
-                    &(" ".to_string() + &get_color(*cell).to_string()),
-                );
+                print_char(index, *cell, get_color(*cell));
                 continue;
             } else {
-                print_char(
-                    index,
-                    *cell,
-                    &(" ".to_string() + &get_color(*cell).to_string()),
-                );
+                print_char(index, *cell, get_color(*cell));
             }
         }
     } // shows board as is - with no moves

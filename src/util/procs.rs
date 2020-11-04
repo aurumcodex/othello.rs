@@ -10,9 +10,24 @@ pub fn print_char(i: usize, c: i8, s: &str) {
     // the difference is subtle, but very important
     if i % 8 == 7 {
         match c {
-            BLACK => println!("{}{}", s.black().on_green().bold(), " ".on_green()),
-            NONE => println!("{}{}", s.red().on_green().bold(), " ".on_green()),
-            WHITE => println!("{}{}", s.white().on_green().bold(), " ".on_green()),
+            BLACK => println!(
+                "{}{}{}",
+                " ".on_green(),
+                s.black().on_green().bold(),
+                " ".on_green()
+            ),
+            NONE => println!(
+                "{}{}{}",
+                " ".on_green(),
+                s.red().on_green().bold(),
+                " ".on_green()
+            ),
+            WHITE => println!(
+                "{}{}{}",
+                " ".on_green(),
+                s.white().on_green().bold(),
+                " ".on_green()
+            ),
             _ => {}
         }
     } else {

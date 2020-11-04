@@ -47,7 +47,14 @@ impl Player {
         let chars: Vec<&str> = input.split_whitespace().collect();
         println!("{:?}", chars);
 
-        if chars[0] == "B" || chars[0] == "b" && !cells.is_empty() && input.len() > 1 {
+        // i don't like this if statement chain, but it works and prevents repeating myself
+        if ((chars[0] == "B" || chars[0] == "b" && self.color == BLACK)
+            && !cells.is_empty()
+            && chars.len() > 1)
+            || ((chars[0] == "W" || chars[0] == "w" && self.color == WHITE)
+                && !cells.is_empty()
+                && chars.len() > 1)
+        {
             row = match ROWS.get(chars[2]) {
                 Some(x) => *x,
                 None => 256usize, // 256 if a bad read
@@ -58,23 +65,6 @@ impl Player {
                 None => 256usize, // 256 if a bad read
             };
 
-            // let in_col = chars[1];
-            // let in_row = chars[2];
-            // println!(
-            //     "has keys? row {} col {}",
-            //     ROWS.contains_key(chars[2]),
-            //     ROWS.contains_key(chars[1])
-            // );
-            // println!(
-            //     "{}: {}, {}: {}",
-            //     type_of(chars[2]),
-            //     chars[2],
-            //     type_of(chars[1]),
-            //     chars[1]
-            // );
-            // row = *ROWS.get(in_row).unwrap();
-            // // row = 256;
-            // col = *COLUMNS.get(in_col).unwrap();
             println!("row {}, col {}", row + 1, col + 1);
 
             return_move = (row * 8) + col;

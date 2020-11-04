@@ -27,15 +27,15 @@ pub fn type_of<T>(_: T) -> &'static str {
 }
 
 pub fn run(/*mut*/ game: Board, options: Opts) -> Result<(), Box<dyn Error>> {
-    for (element, hash) in values::ROWS.iter() {
-        println!(
-            "{}: {}, {}: {}",
-            type_of(*element),
-            *element,
-            type_of(*hash),
-            *hash
-        );
-    }
+    // for (element, hash) in values::ROWS.iter() {
+    //     println!(
+    //         "{}: {}, {}: {}",
+    //         type_of(*element),
+    //         *element,
+    //         type_of(*hash),
+    //         *hash
+    //     );
+    // }
 
     // if let x = *values::ROWS.get("1").unwrap() {
     //     println!("{} {}", type_of(x), x);
