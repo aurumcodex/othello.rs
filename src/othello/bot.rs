@@ -66,8 +66,10 @@ impl Bot for Player {
             MoveType::AlphaBeta => {
                 println!("bot is using a move generated from alpha_beta");
                 let mut ab_hash: HashMap<usize, isize> = HashMap::new();
-
-                for mv in moveset {
+                let list = &moveset[..];
+                // think about making this a while loop for the time being
+                // better yet: use iterators directly
+                for mv in list.iter() {
                     let mut temp = game.clone();
                     temp.apply(color, mv.cell, debug);
                     temp.flip_discs(color, mv.cell, -mv.direction, debug);

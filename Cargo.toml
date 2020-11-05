@@ -19,6 +19,9 @@ colored = { version = "2", optional = true }
 rayon = { version = "1.5", optional = true }
 termion = { version = "*", optional = true }
 
+[target.'cfg(not(target_env = "msvc"))'.dependencies]
+jemallocator = "0.3"
+
 [profile.dev]
 lto = "thin"
 opt-level = 2

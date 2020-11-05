@@ -29,8 +29,9 @@
 - [ ] put functions into own module files within `game` module dir
 - [ ] add documentation for project for project completeness
 - [ ] (completely optional, but consider adding testing modules? (probably won't be necessary))
+= [ ] *IMPORTANT*: consider a bitboard implementation?
 
 == bugfixes
 - [ ] `negamax`: negation with overflow error, need to find out more
 - [ ] display(s): funky things going on there
-- [ ] 
+// - [ ] 

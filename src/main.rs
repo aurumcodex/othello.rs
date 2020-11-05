@@ -2,6 +2,13 @@
 
 use othello_rs::*;
 
+#[cfg(not(target_env = "mvsc"))]
+use jemallocator::Jemalloc;
+
+#[cfg(not(target_env = "mvsc"))]
+#[global_allocator]
+static GLOBAL: Jemalloc = Jemalloc;
+
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut opts = pico_args::Arguments::from_env();
     let opts = othello_rs::Opts {

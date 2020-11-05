@@ -77,7 +77,12 @@ impl Algorithm for Board {
                     true => {
                         score = isize::MIN;
                         let moveset = self.generate_moves(color);
-                        for mv in moveset {
+                        // let list = &moveset[..];
+                        let mut _counter = 0;
+                        // for mv in list.iter() {
+                        // better yet: use iterators directly
+                        while _counter < moveset.len() {
+                            let mv = moveset[_counter];
                             if debug {
                                 dbg!("legal cell = {}", mv.cell);
                             }
@@ -92,12 +97,18 @@ impl Algorithm for Board {
                             if alpha >= beta {
                                 break;
                             }
+                            _counter += 1;
                         }
                     }
                     false => {
                         score = isize::MAX;
                         let moveset = self.generate_moves(color);
-                        for mv in moveset {
+                        // let list = &moveset[..];
+                        let mut _counter = 0;
+                        // for mv in list.iter() {
+                        // better yet: use iterators directly
+                        while _counter < moveset.len() {
+                            let mv = moveset[_counter];
                             if debug {
                                 dbg!("legal cell = {}", mv.cell);
                             }
@@ -112,6 +123,7 @@ impl Algorithm for Board {
                             if alpha >= beta {
                                 break;
                             }
+                            _counter += 1;
                         }
                     }
                 } // end match
